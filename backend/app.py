@@ -76,7 +76,9 @@ def run_research_job(mode="manual"):
 # ----------------------------------------------------------
 # 🚀 API Endpoints
 # ----------------------------------------------------------
-
+@app.get("/")
+def read_root():
+    return {"Python": "on FastAPI"}
 
 @app.get("/api/results")
 async def get_results(mode: str = "manual"):
