@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from backend.services.api_client import fetch_existing_offers
-from backend.services.casino_discovery import discover_casinos_for_state
-from backend.services.promo_research import research_promotions
-from backend.services.comparison import compare_offers
-from backend.services.db_client import get_last_run, save_run_result
+from services.api_client import fetch_existing_offers
+from services.casino_discovery import discover_casinos_for_state
+from services.promo_research import research_promotions
+from services.comparison import compare_offers
+from services.db_client import get_last_run, save_run_result
 import os
 import datetime
 
