@@ -4,7 +4,7 @@ from backend.services.api_client import fetch_existing_offers
 from backend.services.casino_discovery import discover_casinos_for_state
 from backend.services.promo_research import research_promotions
 from backend.services.comparison import compare_offers
-from backend.services.db_client import get_last_run
+from backend.services.db_client import get_last_run, save_run_result
 import os
 import datetime
 
@@ -68,7 +68,7 @@ def run_research_job(mode="manual"):
         "offer_comparisons": offer_comparisons,
     }
 
-    # save_run_result(mode, result)
+    save_run_result(mode, result)
     print(f"[✅] {mode.capitalize()} run completed and saved to Supabase.")
     return result
 
