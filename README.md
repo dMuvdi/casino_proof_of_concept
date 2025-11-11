@@ -128,7 +128,6 @@ npm run dev
 | `/api/results?mode=manual` | GET | Trigger manual research run |
 | `/api/results?mode=last` | GET | Fetch last saved report |
 | `/api/results/scheduled` | POST | Scheduled research endpoint |
-| `/api/progress/{job_id}` | GET | Check job progress (in-memory) |
 
 ### External APIs
 
