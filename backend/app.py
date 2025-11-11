@@ -107,19 +107,6 @@ async def get_results(mode: str = "manual"):
 
     return {"error": "Invalid mode. Use 'manual' or 'last'."}
 
-
-@app.get("/api/results/last")
-async def get_last_result():
-    """
-    GET → Fetch the most recent research run from Supabase.
-    Returns the last saved research result.
-    """
-    data = get_last_run()
-    if not data:
-        raise HTTPException(status_code=404, detail="No previous runs found")
-    return {"success": True, "data": data}
-
-
 @app.get("/api/results/scheduled")
 async def scheduled_results(request: Request):
     """
