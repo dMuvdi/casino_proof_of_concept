@@ -107,7 +107,7 @@ async def get_results(mode: str = "manual"):
 
     return {"error": "Invalid mode. Use 'manual' or 'last'."}
 
-@app.get("/api/results/scheduled")
+@app.post("/api/results/scheduled")
 async def scheduled_results(request: Request):
     """
     POST → Secure endpoint for Supabase Edge Function (Cron)
