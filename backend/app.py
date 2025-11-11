@@ -118,3 +118,8 @@ async def scheduled_results(request: Request):
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "timestamp": datetime.datetime.utcnow().isoformat()}
+
+# This is important for Vercel
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
