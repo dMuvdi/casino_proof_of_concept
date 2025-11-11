@@ -1,12 +1,17 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import os
+import sys
+import datetime
+
+# Ensure services can be imported in serverless environment
+sys.path.insert(0, os.path.dirname(__file__))
+
 from services.api_client import fetch_existing_offers
 from services.casino_discovery import discover_casinos_for_state
 from services.promo_research import research_promotions
 from services.comparison import compare_offers
 from services.db_client import get_last_run, save_run_result
-import os
-import datetime
 
 # ----------------------------------------------------------
 # ⚙️ FastAPI App Setup
@@ -78,7 +83,12 @@ def run_research_job(mode="manual"):
 # ----------------------------------------------------------
 @app.get("/")
 def read_root():
-    return {"Python": "on FastAPI"}
+    return {
+        "status": "running",
+        "message": "Casino AI Research API",
+        "version": "3.0.0",
+    }
+
 
 @app.get("/api/results")
 async def get_results(mode: str = "manual"):
@@ -113,13 +123,31 @@ async def scheduled_results(request: Request):
 
 
 # ----------------------------------------------------------
-# 🧾 Health Check (Optional)
+# 🧾 Health Check & Debug
 # ----------------------------------------------------------
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "timestamp": datetime.datetime.utcnow().isoformat()}
 
+
+@app.get("/api/debug")
+def debug_info():
+    """Debug endpoint to check environment variables."""
+    return {
+        "python_path": sys.path,
+        "env_vars_present": {
+            "PERPLEXITY_API_KEY": bool(os.getenv("PERPLEXITY_API_KEY")),
+            "SUPABASE_URL": bool(os.getenv("SUPABASE_URL")),
+            "SUPABASE_SERVICE_KEY": bool(os.getenv("SUPABASE_SERVICE_KEY")),
+            "CRON_SECRET_KEY": bool(os.getenv("CRON_SECRET_KEY")),
+        },
+        "working_directory": os.getcwd(),
+        "file_location": __file__,
+    }
+
+
 # This is important for Vercel
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
