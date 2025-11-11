@@ -12,3 +12,4 @@
 /backend/*.pyzwzw
 /backend/*.pyzwzwz
 .vscode/
+.DS_Store
